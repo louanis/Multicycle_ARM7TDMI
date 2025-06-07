@@ -1,0 +1,107 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity tb_unite_traitement is
+end tb_unite_traitement;
+
+architecture test of tb_unite_traitement is
+    signal clk      : std_logic := '0';
+    signal rst      : std_logic := '0';
+    signal regWr    : std_logic := '0';
+    signal RW       : std_logic_vector(3 downto 0) := (others => '0');
+    signal RA       : std_logic_vector(3 downto 0) := (others => '0');
+    signal RB       : std_logic_vector(3 downto 0) := (others => '0');
+    signal ALUSrc   : std_logic := '0';
+    signal ALUCtr   : std_logic_vector(1 downto 0) := (others => '0');
+    signal MemWr    : std_logic := '0';
+    signal MemToReg : std_logic := '0';
+    signal Immediat : std_logic_vector(7 downto 0) := (others => '0');
+
+    
+    constant CLK_PERIOD : time := 10 ns;
+
+begin
+    
+    inst1: entity work.Unite_traitement
+        port map(
+            clk      => clk,
+            rst      => rst,
+            regWr    => regWr,
+            RW       => RW,
+            RA       => RA,
+            RB       => RB,
+            ALUSrc   => ALUSrc,
+            ALUCtr   => ALUCtr,
+            MemWr    => MemWr,
+            MemToReg => MemToReg,
+            Immediat => Immediat
+        );
+
+        
+    clk_process : process
+    begin
+        while now < 500 ns loop
+            CLK <= '0'; wait for CLK_PERIOD / 2;
+            CLK <= '1'; wait for CLK_PERIOD / 2;
+        end loop;
+        wait;
+    end process;
+
+    
+    process
+    begin
+
+        RST <= '1';
+        wait for 20 ns;
+        RST <= '0';
+        wait for 10 ns;
+
+        -- === INIT REGISTRES ===
+        -- reg0 = 10, reg1 = 20
+        -- We'll simulate this by forcing values using RegWR
+        RW <= "0000"; RegWR <= '1'; ALUCtr <= "10"; RA <= "0000"; RB <= "0000"; ALUSrc <= '1'; MemtoReg <= '0'; wait for CLK_PERIOD;
+        RW <= "0001"; RA <= "0001"; wait for CLK_PERIOD;
+        RegWR <= '0';
+
+        -- 1. Addition de 2 registres : reg2 = reg0 + reg1
+        RA <= "0000"; RB <= "0001"; RW <= "0010";
+        ALUSrc <= '0'; ALUCtr <= "00"; RegWR <= '1'; MemtoReg <= '0'; wait for CLK_PERIOD;
+        RegWR <= '0';
+
+        -- 2. Addition registre + immédiat : reg3 = reg0 + 5
+        RA <= "0000"; RW <= "0011";
+        ALUSrc <= '1'; ALUCtr <= "00"; RegWR <= '1'; wait for CLK_PERIOD;
+        RegWR <= '0';
+
+        -- 3. Soustraction de 2 registres : reg4 = reg1 - reg0
+        RA <= "0001"; RB <= "0000"; RW <= "0100";
+        ALUSrc <= '0'; ALUCtr <= "01"; RegWR <= '1'; wait for CLK_PERIOD;
+        RegWR <= '0';
+
+        -- 4. Soustraction immédiate : reg5 = reg0 - 3
+        RA <= "0000"; RW <= "0101";
+        ALUSrc <= '1'; ALUCtr <= "01"; RegWR <= '1'; wait for CLK_PERIOD;
+        RegWR <= '0';
+
+        -- 5. Copie reg0 -> reg6
+        RA <= "0000"; RW <= "0110";
+        ALUSrc <= '0'; ALUCtr <= "10"; RegWR <= '1'; wait for CLK_PERIOD;
+        RegWR <= '0';
+
+        -- 6. Écriture de reg0 dans mémoire à adresse reg1
+        RA <= "0001"; RB <= "0000"; -- addr = reg1, data = reg0
+        MemWR <= '1'; ALUSrc <= '0'; ALUCtr <= "00"; wait for CLK_PERIOD;
+        MemWR <= '0';
+
+        -- 7. Lecture depuis mémoire et stockage dans reg7
+        RA <= "0001"; -- reg1 = adresse
+        RW <= "0111"; -- reg7
+        MemtoReg <= '1'; RegWR <= '1'; wait for CLK_PERIOD;
+        RegWR <= '0'; MemtoReg <= '0';
+
+        wait for 50 ns;
+        assert false report "Test terminé avec succès" severity failure;
+    end process;
+
+end architecture test;
