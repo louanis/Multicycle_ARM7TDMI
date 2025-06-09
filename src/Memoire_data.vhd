@@ -18,7 +18,7 @@ architecture rtl of memoire_data is
     type memoiretype is array(63 downto 0) of std_logic_vector(31 downto 0); -- 64 mots de 32 bits
     signal memoire : memoiretype := (others => (others => '0')); -- mémoire interne
 begin
-    process(all)
+    process(clk, rst)
     begin
         if RdEn = '1' then
             DataOut <= memoire(to_integer(unsigned(Addr)));

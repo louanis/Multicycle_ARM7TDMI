@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity Reg is
+entity Regclk is
     generic(
         N : integer := 32  
     );
@@ -12,7 +12,7 @@ entity Reg is
         Din     : in  std_logic_vector(N-1 downto 0);
         Dout    : out std_logic_vector(N-1 downto 0)
     );
-end entity Reg;
+end entity Regclk;
 
 architecture Behavioral of Reg is
 begin
