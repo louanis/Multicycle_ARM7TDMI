@@ -14,7 +14,7 @@ entity Regclk is
     );
 end entity Regclk;
 
-architecture Behavioral of Reg is
+architecture Behavioral of Regclk is
 begin
     process(CLK, RST)
     begin

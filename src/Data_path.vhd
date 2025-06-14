@@ -7,42 +7,59 @@ entity Data_path is
     port(
         clk      : in std_logic;
         rst      : in std_logic;
-        res      : out std_logic_vector(31 downto 1);
-        IRQ      : in std_logic_vector(1 downto 0);
-        IRQ_serv : out std_logic
+        Resultat : out std_logic_vector(31 downto 0);
+        IRQ0     : in std_logic;
+        IRQ1     : in std_logic;
+        IRQ      : out std_logic;
+        IRQ_serv : in std_logic;
+
+        CPSROUT  : out std_logic_vector(31 downto 0);
+
+        inst_mem : out std_logic_vector(31 downto 0);
+        inst_reg : out std_logic_vector(31 downto 0);
+
+        PCSel    : in std_logic_vector(1 downto 0);
+        PCWrEn   : in std_logic;
+        LRWrEn   : in std_logic;
+        AdrSel   : in std_logic;
+        MemRdEn  : in std_logic;
+        MemWrEn  : in std_logic;
+        IRWrEn   : in std_logic;
+        RbSel    : in std_logic;
+        WSel     : in std_logic;
+        RegWrEn  : in std_logic;
+        ALUSelA  : in std_logic;
+        ALUSelB  : in std_logic_vector(1 downto 0);
+        ALUOP    : in std_logic_vector(1 downto 0);
+        ResWrEn  : in std_logic;
+        CPSRSel  : in std_logic;
+        CPSRWrEn : in std_logic;
+        SPSRWrEn : in std_logic
+        
     );
 end entity Data_path;
 
 architecture RTL of Data_path is
 
     signal ALU_out, Reg_ALU_out, Reg_LR_out, VIC_Out, Mux_4v1_Out : std_logic_vector(31 downto 0);
-    signal PCSel                                                  : std_logic_vector(1 downto 0);
 
-    signal PCWrEn                                                 : std_logic;
     signal PCOut                                                  : std_logic_vector(31 downto 0);
     
-    signal LRWrEn                                                 : std_logic;
 
-    signal AdrSel                                                 : std_logic;
     signal Mux_addr                                               : std_logic_vector(5 downto 0);
 
-    signal MemRdEn, MemWrEn                                       : std_logic;    
     signal RdData, WrData                                         : std_logic_vector(31 downto 0);
 
     signal Reg_IR_out                                             : std_logic_vector(31 downto 0);
-    signal IRWrEn                                                 : std_logic;    
 
     
     signal Reg_DR_out                                             : std_logic_vector(31 downto 0);
     
     signal Mux_Reg_out                                            : std_logic_vector(3 downto 0);
-    signal RbSel                                                  : std_logic;
 
     signal Mux_bus_out                                            : std_logic_vector(31 downto 0);
-    signal WSel                                                   : std_logic;
 
     signal BusA, BusB                                             : std_logic_vector(31 downto 0);
-    signal RegWrEn                                                : std_logic;
 
     signal extend_ir_8                                            : std_logic_vector(31 downto 0);
     
@@ -51,32 +68,35 @@ architecture RTL of Data_path is
     signal RegA, RegB                                             : std_logic_vector(31 downto 0);
 
     signal mux_alu_a_out                                          : std_logic_vector(31 downto 0);
-    signal ALUSelA                                                : std_logic; 
-
-    signal Alu_out_Reg                                            : std_logic_vector(31 downto 0);
 
     signal mux_alu_b_out                                          : std_logic_vector(31 downto 0);
-    signal ALUSelB                                                : std_logic_vector(1 downto 0); 
 
-    signal ALUOP                                                  : std_logic_vector(1 downto 0);
     signal flag_N, flag_Z                                         : std_logic;
-    
-    signal ResWrEn                                                : std_logic;
-    signal Resultat                                               : std_logic_vector(31 downto 0);
 
-    signal CPSRSel                                                : std_logic;
     signal CPSRA,  RegCPSRin                                      : std_logic_vector(31 downto 0);
 
     signal RegCPSROut                                             : std_logic_vector(31 downto 0);
-    signal CPSRWrEn                                               : std_logic;
     
     signal RegSPSROut                                             : std_logic_vector(31 downto 0);
-    signal SPSRWrEn                                               : std_logic;
 
 
 begin
 
+    VIC_comp : entity work.VIC
+        port map(   
+            CLK      => clk, 
+            RESET    => rst, 
+            IRQ0     => IRQ0, 
+            IRQ1     => IRQ1, 
+            IRQ_SERV => IRQ_SERV,   
+            IRQ      => IRQ, 
+            VICPC    => VIC_Out
+        );
+
     mux_pc : entity work.mux4v1
+        generic map(
+            N => 32
+        )
         port map(
             A   => ALU_out,
             B   => Reg_ALU_out,
@@ -122,15 +142,16 @@ begin
             S   => Mux_addr
         );
 
-    mem_dat: entity work.Memoire_data(RTL)
+    mem_dat: entity work.DualPortRAM(RTL)
         port map(
-            clk     => clk,
-            rst     => rst,
-            DataIn  => WrData,
-            DataOut => RdData,
-            Addr    => Mux_addr,
-            WrEn    => MemWrEn,
-            RdEn    => MemRdEn
+	        clock     => clk,
+            rst       => rst,
+	        data      => RegB,
+            q         => RdData,
+	        rdaddress => Mux_addr,
+            wraddress => Mux_addr,
+            rden      => MemRdEn,
+            wren      => MemWrEn
         );
 
     Reg_ir : entity work.Reg
@@ -251,7 +272,7 @@ begin
             clk  => clk,
             rst  => rst,
             Din  => ALU_out,
-            Dout => Alu_out_Reg
+            Dout => Reg_ALU_out
         );
 
     mux_alu_b : entity work.mux4v1
@@ -329,45 +350,10 @@ begin
     CPSRA(30) <= flag_Z;
     CPSRA(29 downto 0) <= RegCPSROut(29 downto 0);
 
+    CPSROUT <= CPSRA;
 
+    inst_reg <= Reg_IR_out;
+    inst_mem <= RdData;
 
-
-
-    Machine_AE : entity work.MAE
-    port map(
-        clk             => clk,               -- Clock signal
-        rst             => rst,               -- Reset signal         
-        IRQ             => IRQ,               -- IRQ interrupt signals
-        inst_memory     => RdData,            -- Instruction fetched from memory (not Reg_IR_out)
-        inst_register   => Reg_IR_out,        -- Instruction already in the Instruction Register (IR)
-        CPSR            => CPSRA,             -- Assuming you want to pass the current CPSR value
-        IRQServ         => IRQ_serv,          -- IRQ service output (indicating if interrupt is handled)
-        
-        -- Control Signals for PC and Memory
-        PCSel           => PCSel,             -- Program Counter selection signal
-        PCWrEn          => PCWrEn,            -- Program Counter Write Enable
-        LRWrEn          => LRWrEn,            -- Link Register Write Enable
-        AdrSel          => AdrSel,            -- Address selection signal
-        MemRden         => MemRdEn,           -- Memory Read Enable
-        MemWrEn         => MemWrEn,           -- Memory Write Enable
-        
-        -- Instruction Register and Register File control
-        IRWrEn          => IRWrEn,            -- Instruction Register Write Enable
-        WSel            => WSel,              -- Write selection for registers
-        RegWrEn         => RegWrEn,           -- Register Write Enable
-        
-        -- ALU Operation control
-        ALUSelA         => ALUSelA,           -- ALU Operand A Select
-        ALUSelB         => ALUSelB,           -- ALU Operand B Select
-        ALUOP           => ALUOP,             -- ALU Operation Select
-        
-        -- CPSR and SPSR control
-        CPSRSel         => CPSRSel,           -- CPSR selection signal (to decide if CPSR or SPSR is used)
-        CPSRWrEn        => CPSRWrEn,          -- CPSR Write Enable
-        SPSRWrEn        => SPSRWrEn,          -- SPSR Write Enable
-        
-        -- Result Write Enable
-        ResWrEn         => ResWrEn
-    );
 
 end architecture RTL;
