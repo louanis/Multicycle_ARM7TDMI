@@ -47,6 +47,7 @@ architecture Behavioral of MAE is
                     when "111001100001" => instr_courante <= LDR;
                     when "111000111010" => instr_courante <= MOV;
                     when "111001100000" => instr_courante <= STR;
+                    -- Add BX instruction decoding
                     when "111000010010" => instr_courante <= BX;
                     when others => instr_courante <= MOV;
                 end case;
@@ -92,24 +93,33 @@ architecture Behavioral of MAE is
                     curr_state <= E2;
 
                 when E2 =>
-                    if IRQ = '1' and isr = '0' then
+                    IRWrEn   <= '1';
+                    MemRdEn  <= '1';
+                    IRQServ  <= '0';
+
+                    if IRQ = '1' then
                         curr_state <= E16;
+                    
+                    elsif isr = '1' then
+                        curr_state <= E18;
+                    
                     else
+
                         case instr_courante is
-                            when MOV => curr_state <= E3;
-                            when LDR => curr_state <= E3;
-                            when STR => curr_state <= E3;
                             when ADDi => curr_state <= E3;
-                            when ADDR => curr_state <= E3;
-                            when CMP => curr_state <= E8;  -- Direct to CMP state
-                            when BAL => curr_state <= E4;
-                            when BLT => 
-                                if CPSR(31) = '1' then  -- Check N flag
-                                    curr_state <= E4;    -- Taken branch
-                                else
-                                    curr_state <= E15;   -- Not taken
-                                end if;
-                            when others => curr_state <= E1;
+                            when ADDr => curr_state <= E3;
+                            when MOV  => curr_state <= E3;
+                            when CMP  => curr_state <= E3;
+                            when LDR  => curr_state <= E3;
+                            when STR  => curr_state <= E3;
+                            when BAL  => curr_state <= E4;
+                            when BX   => curr_state <= E18;
+                            when BLT =>
+                                case CPSR(31) is
+                                    when '1' => curr_state <= E4;
+                                    when others => curr_state <= E15;
+                                end case;
+                            when others => curr_state <= E3;
                         end case;
                     end if;
                 
@@ -134,13 +144,14 @@ architecture Behavioral of MAE is
                         when others => curr_state <= E1;  -- safe fallback
                     end case;
 
-                when E4 =>  -- BAL/BLT taken branch execution
-                    PCWrEn <= '1';
-                    PCSel <= "00";    -- ALU_out (PC + offset)
-                    ALUSelA <= '1';   -- PC
-                    ALUSelB <= "10";  -- Imm24 (sign extended)
-                    ALUOP <= "00";    -- ADD
-                    curr_state <= E1;   
+                when E4 =>  -- BAL / BLT true
+                    PCWrEn   <= '1';
+                    PCSel    <= "00";    -- ALU_out
+                    ALUSelA  <= '1';     -- PC
+                    ALUSelB  <= "10";    -- Imm24
+                    ALUOP    <= "00";    -- ADD
+
+                    curr_state <= E1;    
 
                 when E5 =>  -- STR, LDR, ADDI → ALU_out ← A + Imm8
                     ALUSelA  <= '0';     -- RegA
@@ -175,11 +186,12 @@ architecture Behavioral of MAE is
 
                     curr_state <= E13;
 
-                when E8 =>  -- CMP execution
-                    ALUSelA <= '0';   -- RegA
-                    ALUSelB <= "01";  -- Imm8
-                    ALUOP <= "10";    -- SUB (for flags)
-                    CPSRWrEn <= '1';  -- Update flags in CPSR
+                when E8 =>  -- CMP → flags ← A - Imm8
+                    ALUSelA  <= '0';
+                    ALUSelB  <= "01";
+                    ALUOP    <= "10";    -- SUB
+                    -- Flags N/Z will be set by ALU, no extra enables
+                    
                     curr_state <= E1;
 
                 when E9 =>  -- LDR → DR ← Mem[ALU_out]
@@ -210,12 +222,15 @@ architecture Behavioral of MAE is
                     
                     curr_state <= E1;
 
-                when E15 => -- BLT not taken (skip branch)
-                    PCWrEn <= '1';
-                    PCSel <= "00";    -- ALU_out (PC + 1)
-                    ALUSelA <= '1';   -- PC
-                    ALUSelB <= "11";  -- Constant 1
-                    ALUOP <= "00";    -- ADD
+                when E15 =>
+                    -- PC ← PC + 1, because BLT was false (skip)
+                    PCWrEn   <= '1';
+                    PCSel    <= "00";    -- ALU_out
+                    ALUSelA  <= '1';     -- Select PC
+                    ALUSelB  <= "11";    -- Constant 1
+                    ALUOP    <= "00";    -- ADD
+                    ResWrEn  <= '0';
+
                     curr_state <= E1;
 
 
