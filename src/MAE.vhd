@@ -1,48 +1,36 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-Entity MAE is Port(
-  clk, rst                    : in std_logic;
-  IRQ                         : in std_logic;
-  inst_memory                    : in std_logic_vector(31 downto 0);
-  inst_register                    : in std_logic_vector(31 downto 0);
-  N                           : in std_logic;
-  IRQServ                     : out std_logic;
-  PCSel                       : out std_logic_vector(1 downto 0);
-  PCWrEn, LRWrEn              : out std_logic;
-  AdrSel, MemRden, MemWrEn    : out std_logic;
-  IRWrEn, WSel, RegWrEn       : out std_logic;
-  ALUSelA                     : out std_logic;
-  ALUSelB, ALUOP              : out std_logic_vector(1 downto 0);
-  CPSRSel, CPSRWrEn, SPSRWrEn : out std_logic;
-  ResWrEn                     : out std_logic);
+entity MAE is 
+    port(
+        clk, rst                    : in std_logic;
+        IRQ                         : in std_logic;
+        inst_memory                 : in std_logic_vector(31 downto 0);
+        inst_register               : in std_logic_vector(31 downto 0);
+        CPSR                        : in std_logic_vector(31 downto 0);
+        IRQServ                     : out std_logic;
+        PCSel                       : out std_logic_vector(1 downto 0);
+        PCWrEn, LRWrEn              : out std_logic;
+        AdrSel, MemRden, MemWrEn    : out std_logic;
+        IRWrEn, WSel, RegWrEn       : out std_logic;
+        ALUSelA                     : out std_logic;
+        ALUSelB, ALUOP              : out std_logic_vector(1 downto 0);
+        CPSRSel, CPSRWrEn, SPSRWrEn : out std_logic;
+        ResWrEn                     : out std_logic
+    );
 end entity;
 
-Architecture Behavioral of MAE is 
+architecture Behavioral of MAE is 
 
   type enum_instruction is (MOV, ADDi, ADDr, CMP, LDR, STR, BAL, BLT, BX);
-  type state is (E_1, E_2, E_3, E_4, E_5, E_6, E_7, E_8, E_9, E_20, E_21, E_22, E_23, E_24, E_25, E_26, E_27, E_28);
+  type state is (E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, E11, E12, E13, E15, E16, E17, E18);
     
   signal instr_courante           : enum_instruction;
-  signal E_present, E_futur : state;
+  signal Epresent, Efutur : state;
   signal isr                      : std_logic;
 
   begin
     
-    process(clk, rst)
-    begin
-        
-        if(rst = '1') then
-        
-            E_present <= E_1;
-          
-        elsif rising_edge(clk) then
-          
-            E_present <= E_futur;
-          
-        end if;
-          
-    end process;
         
     
     process(inst_memory)
@@ -108,451 +96,207 @@ Architecture Behavioral of MAE is
     end process;
     
     
-    process(E_present, instr_courante, isr, IRQ, N)
+    process(clk, rst)
     begin
-        
-        case E_present is 
-          
-        when E_1 => 
-            IRQServ <= '0';
-	    	    PCSel <= "--";
-            PCWrEn <= '0';
-            LRWrEn <= '0';
-            AdrSel <= '0';
-            MemRdEn <= '1';
-            MemWrEn <= '0';
-            IRWrEn <= '1';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-	    	    ALUSelA <= '-';
-            ALUSelB <= "--";
-	    	    ALUOp <= "--";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
+        if rst = '1' then
+            -- reset logic here (e.g., state <= E0)
+        elsif rising_edge(clk) then
 
-            E_futur <= E_2;
-          
-          
-        when E_2 =>
-            IRQServ <= '0';
-	    	    PCSel <= "--";
-            PCWrEn <= '0';
-            LRWrEn <= '0';
-            AdrSel <= '-';
-            MemRdEn <= '0';
-            MemWrEn <= '0';
-            IRWrEn <= '1';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-	    	    ALUSelA <= '-';
-            ALUSelB <= "--";
-	    	    ALUOp <= "--";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-          
-            if IRQ = '1' and isr = '0' then
-                E_futur <= E_27;
-            elsif isr = '1' and instr_courante = BX then
-                E_futur <= E_26;
-            else
-                if((instr_courante = LDR) or (instr_courante = STR) or (instr_courante = ADDr) or (instr_courante = ADDi) or (instr_courante = CMP) or (instr_courante = MOV)) then
-                    E_futur <= E_3;
-                elsif (instr_courante = BAL) or ((instr_courante = BLT) and (N = '1')) then
-                    E_futur <= E_4;
-                else
-                    E_futur <= E_5;
-                end if;
-            end if;
-          
-          
-        when E_3 =>
-            IRQServ <= '0';
-            PCSel <= "00";
-            PCWrEn <= '1';
-            LRWrEn <= '0';
-	    	    AdrSel <= '-';
-            MemRdEn <= '0';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-            ALUSelA <= '0';
-            ALUSelB <= "11";
-            ALUOp <= "00";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-			
-            E_futur <= E_6;
-          
-          
-        when E_4 =>
-            IRQServ <= '0';
-            PCSel <= "00";
-            PCWrEn <= '1';
-            LRWrEn <= '0';
-	    	    AdrSel <= '0';
-            MemRdEn <= '1';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-            ALUSelA <= '0';
-            ALUSelB <= "10";
-            ALUOp <= "00";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-                    
-            E_futur <= E_1;
-          
-          
-        when E_5 =>
-            IRQServ <= '0';
-            PCSel <= "00";
-            PCWrEn <= '1';
-            LRWrEn <= '0';
-	    	    AdrSel <= '0';
-            MemRdEn <= '1';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-            ALUSelA <= '0';
-            ALUSelB <= "11";
-            ALUOp <= "00";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-                    
-            E_futur <= E_1;
-          
-          
-        when E_6 =>
-            IRQServ <= '0';
-	    	    PCSel <= "--";
-            PCWrEn <= '0';
-            LRWrEn <= '0';
-	    	    AdrSel <= '-';
-            MemRdEn <= '0';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-	    	    ALUSelA <= '-';
-            ALUSelB <= "--";
-	    	    ALUOp <= "--";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-                    
-            if ((instr_courante = LDR) or (instr_courante = STR) or (instr_courante = ADDi)) then
-                etatfutur <= E_7;
-            elsif instr_courante = ADDr then
-                etatfutur <= E_8;
-            elsif instr_courante = MOV then
-                etatfutur <= E_9;
-            else
-                E_futur <= E_20;
-            end if;
-          
-          
-        when E_7 => 
-            IRQServ <= '0';
-	    	    PCSel <= "--";
-            PCWrEn <= '0';
-            LRWrEn <= '0';
-	    	    AdrSel <= '-';
-            MemRdEn <= '0';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-            ALUSelA <= '1';
-            ALUSelB <= "01";
-            ALUOp <= "00";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-                
-                
-            if instr_courante = LDR then
-                E_futur <= E_21;
-            elsif instr_courante = STR then
-                E_futur <= E_22;
-            else
-                E_futur <= E_23;
-            end if;
-          
-          
-        when E_8 =>
-            IRQServ <= '0';
-	    	    PCSel <= "--";
-            PCWrEn <= '0';
-            LRWrEn <= '0';
-	    	    AdrSel <= '-';
-            MemRdEn <= '0';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-            ALUSelA <= '1';
-            ALUSelB <= "00";
-            ALUOp <= "00";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-                
-            E_futur <= E_23;
-          
-          
-        when E_9 =>
-            IRQServ <= '0';
-	    	    PCSel <= "--";
-            PCWrEn <= '0';
-            LRWrEn <= '0';
-	    	    AdrSel <= '-';
-            MemRdEn <= '0';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-	    	    ALUSelA <= '-';
-            ALUSelB <= "01";
-            ALUOp <= "01";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-                
-            E_futur <= E_23;
-          
-          
-        when E_20 => 
-            IRQServ <= '0';
-	    	    PCSel <= "--";
-            PCWrEn <= '0';
-            LRWrEn <= '0';
-	    	    AdrSel <= '0';
-            MemRdEn <= '1';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-            ALUSelA <= '1';
-            ALUSelB <= "01";
-            ALUOp <= "10";
-            CPSRSel <= '0';
-            CPSRWrEn <= '1';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-                
-            E_futur <= E_1;
+            -- assume all signals are already set to '0' at the top of the process
+
+            case state is
+                when E1 =>  -- Load IR from memory
+                    IRWrEn   <= '1';         -- Write to IR
+                    MemRdEn  <= '1';         -- Enable memory read
+                    PCWrEn   <= '0';         -- Do not write to PC
+                    PCSel    <= "00";        -- Address memory using the PC (Program Counter)
+                    AdrSel   <= '0';         -- Use PC address to access memory
+
+                    state <= E1;
+
+                when E2 =>  -- Load IR
+                    IRWrEn   <= '1';
+                    MemRdEn  <= '1';
             
-          
-        when E_21 =>
-            IRQServ <= '0';
-	    	    PCSel <= "--";
-            PCWrEn <= '0';
-            LRWrEn <= '0';
-            AdrSel <= '1';
-            MemRdEn <= '1';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-            WSel <= '-';
-            RegWrEn <= '0';
-	    	    ALUSelA <= '-';
-            ALUSelB <= "--";
-	    	    ALUOp <= "--";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-                
-            E_futur <= E_24;
-          
-          
-        when E_22 =>
-            IRQServ <= '0';
-	    	    PCSel <= "--";
-            PCWrEn <= '0';
-            LRWrEn <= '0';
-            AdrSel <= '1';
-            MemRdEn <= '0';
-            MemWrEn <= '1';
-            IRWrEn <= '0';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-	    	    ALUSelA <= '-';
-            ALUSelB <= "--";
-	    	    ALUOp <= "--";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '1';
-                
-            E_futur <= E_1;
-          
-          
-        when E_23 =>
-            IRQServ <= '0';
-	    	    PCSel <= "--";
-            PCWrEn <= '0';
-            LRWrEn <= '0';
-	    	    AdrSel <= '0';
-            MemRdEn <= '1';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-            WSel <= '1';
-            RegWrEn <= '1';
-	    	    ALUSelA <= '-';
-            ALUSelB <= "--";
-	    	    ALUOp <= "--";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-                
-            E_futur <= E_1;
-          
-          
-        when E_24 =>
-            IRQServ <= '0';
-	    	    PCSel <= "--";
-            PCWrEn <= '0';
-            LRWrEn <= '0';
-	    	    AdrSel <= '-';
-            MemRdEn <= '0';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-	    	    ALUSelA <= '-';
-            ALUSelB <= "--";
-		       	ALUOp <= "--";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-                
-            E_futur <= E_25;
-          
-          
-        when E_25 =>
-            IRQServ <= '0';
-	    	    PCSel <= "--";
-            PCWrEn <= '0';
-            LRWrEn <= '0';
-	    	    AdrSel <= '0';
-            MemRdEn <= '1';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-            WSel <= '0';
-            RegWrEn <= '1';
-	    	    ALUSelA <= '-';
-            ALUSelB <= "--";
-	    	    ALUOp <= "--";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-                
-            E_futur <= E_1;
-          
-          
-        when E_26 =>
-            IRQServ <= '1';
-            PCSel <= "10";
-            PCWrEn <= '1';
-            LRWrEn <= '0';
-	    	    AdrSel <= '0';
-            MemRdEn <= '1';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-	    	    ALUSelA <= '-';
-            ALUSelB <= "--";
-	    	    ALUOp <= "--";
-            CPSRSel <= '1';
-            CPSRWrEn <= '1';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-                
-            E_futur <= E_1;
-          
-          
-        when E_27 => 
-            IRQServ <= '0';
-	    	    PCSel <= "--";
-            PCWrEn <= '0';
-            LRWrEn <= '1';
-	    	    AdrSel <= '-';
-            MemRdEn <= '0';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-	    	    ALUSelA <= '-';
-            ALUSelB <= "--";
-	    	    ALUOp <= "--";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '1';
-            ResWrEn <= '0';
-                
-            E_futur <= E_28;
-          
-          
-        when E_28 =>
-            IRQServ <= '0';
-            PCSel <= "11";
-            PCWrEn <= '1';
-            LRWrEn <= '0';
-	    	    AdrSel <= '0';
-            MemRdEn <= '1';
-            MemWrEn <= '0';
-            IRWrEn <= '0';
-	    	    WSel <= '-';
-            RegWrEn <= '0';
-	    	    ALUSelA <= '-';
-            ALUSelB <= "--";
-	    	    ALUOp <= "--";
-	    	    CPSRSel <= '-';
-            CPSRWrEn <= '0';
-            SPSRWrEn <= '0';
-            ResWrEn <= '0';
-                
-            E_futur <= E_1;
-            
-        end case;
+                    IRQServ <= '0';
+
+                    if IRQ = '1' then
+                        state <= E16;
+                    elsif isr = '1' then
+                        state <= E18;
+                    else
+                        case instruction_courante is
+                            when BLT =>
+                                if CPSR(31) = '1' then
+                                    state <=  E4;
+                                else
+                                    state <= E15;
+                                end if;
+                            when BAL =>
+                                state <=  E4;
+                            when BX =>
+                                state <= E18;
+                            when LDR =>
+                                state <= E3;
+                            when STR =>
+                                state <= E3;
+                            when ADD =>
+                                state <= E3;
+                            when ADDI => 
+                                state <= E3;
+                            when CMP =>
+                                state <= E3;
+                            when MOVE =>
+                                state <= E3;
+                            others => null
+                        end case;
+                    end if;
+
+                when E3 =>  -- PC ← PC+1, A ← Reg[Rn], B ← Reg[Rm]
+                    PCWrEn   <= '1';
+                    PCSel    <= "00";    -- ALU_out (PC + 1)
+                    ALUSelA  <= '1';     -- Select PC
+                    ALUSelB  <= "11";    -- Select 1
+                    ALUOP    <= "00";    -- ADD
+                    ResWrEn  <= '1';
+
+                    
+                    case instruction_courante is
+                        when LDR =>
+                            state <= E5;
+                        when STR =>
+                            state <= E5;
+                        when ADD =>
+                            state <= E6;
+                        when ADDI => 
+                            state <= E5;
+                        when CMP =>
+                            state <= E8;
+                        when MOVE =>
+                            state <= E7;
+                        others => null
+                    end case;
+
+                when E4 =>  -- BAL / BLT true
+                    PCWrEn   <= '1';
+                    PCSel    <= "00";    -- ALU_out
+                    ALUSelA  <= '1';     -- PC
+                    ALUSelB  <= "10";    -- Imm24
+                    ALUOP    <= "00";    -- ADD
+
+                    state <= E1;    
+
+                when E5 =>  -- STR, LDR, ADDI → ALU_out ← A + Imm8
+                    ALUSelA  <= '0';     -- RegA
+                    ALUSelB  <= "01";    -- Imm8
+                    ALUOP    <= "00";    -- ADD
+                    ResWrEn  <= '1';
+                    
+                    case instruction_courante is
+                        when LDR =>
+                            state <= E9;
+                        when STR =>
+                            state <= E12;
+                        when ADDI => 
+                            state <= E13;
+                        others => null
+                    end case;
+
+                when E6 =>  -- ADD → ALU_out ← A + B
+                    ALUSelA  <= '0';
+                    ALUSelB  <= "00";
+                    ALUOP    <= "00";
+                    ResWrEn  <= '1';
+
+                    state <= E13;
+
+                when E7 =>  -- MOV → ALU_out ← Imm8
+                    ALUSelA  <= '0';     -- not used
+                    ALUSelB  <= "01";
+                    ALUOP    <= "01";    -- B
+                    ResWrEn  <= '1';
+
+                    state <= E13;
+
+                when E8 =>  -- CMP → flags ← A - Imm8
+                    ALUSelA  <= '0';
+                    ALUSelB  <= "01";
+                    ALUOP    <= "10";    -- SUB
+                    -- Flags N/Z will be set by ALU, no extra enables
+                    
+                    state <= E1;
+
+                when E9 =>  -- LDR → DR ← Mem[ALU_out]
+                    AdrSel   <= '1';
+                    MemRdEn <= '1';
+
+                    state <= E10;
+
+                when E10 => -- NOPLoad
+                    -- No control signals activated (pure wait)
+                    state <= E11;
+
+                when E11 => -- LDR writeback
+                    RegWrEn <= '1';
+                    WSel    <= '0';     -- DR
+                    
+                    state <= E1;
+
+                when E12 => -- STR → Mem[ALU_out] ← RegB
+                    AdrSel  <= '1';
+                    MemWrEn <= '1';
+                    
+                    state <= E1;
+
+                when E13 => -- ADDI writeback
+                    RegWrEn <= '1';
+                    WSel    <= '1';     -- ALU_out
+                    
+                    state <= E1;
+
+                when E15 =>  -- BLT (false): PC ← PC + 1
+                    PCWrEn   <= '1';
+                    PCSel    <= "00";    -- ALU_out
+                    ALUSelA  <= '1';     -- PC
+                    ALUSelB  <= "11";    -- constant 1
+                    ALUOP    <= "00";    -- ADD
+                    ResWrEn  <= '1';
+
+                    state <= E1;
+
+                when E16 => -- IRQ prepare: SPSR ← CPSR, LR ← PC
+                    SPSRWrEn <= '1';
+                    LRWrEn   <= '1';
+
+                    state <= E17;
+
+                when E17 => -- IRQ entry: PC ← VIC, isr <= 1
+                    PCWrEn   <= '1';
+                    PCSel    <= "11";    -- VIC
+                    IRQ_serv <= '1';
+
+                    isr <= '1';
+
+                    state <= E1;
+
+                when E18 => -- ISR return: PC ← LR, CPSR ← SPSR, isr <= 0
+                    PCWrEn    <= '1';
+                    PCSel     <= "10";   -- LR
+                    CPSRSel   <= '1';    -- SPSR
+                    CPSRWrEn  <= '1';
+                    IRQ_serv  <= '0';
+
+                    ISR <= '0';
+                    irqserv <= '1';
+
+                    state <= E1;
+
+                when others =>
+                    -- default or idle
+            end case;
+        end if;
     end process;
-		
-	process(clk, rst)
-	begin
-			
-		if rst = '1' then
-			isr <= '0';
-				
-		elsif rising_edge(clk) then
-				
-			if E_present = E_26 then
-					isr <= '0';
-			elsif E_present = E_28 then
-					isr <= '1';
-			end if;
-		end if;
-	end process;
+
 					
 				
     

@@ -329,4 +329,45 @@ begin
     CPSRA(30) <= flag_Z;
     CPSRA(29 downto 0) <= RegCPSROut(29 downto 0);
 
+
+
+
+
+    Machine_AE : entity work.MAE
+    port map(
+        clk             => clk,               -- Clock signal
+        rst             => rst,               -- Reset signal         
+        IRQ             => IRQ,               -- IRQ interrupt signals
+        inst_memory     => RdData,            -- Instruction fetched from memory (not Reg_IR_out)
+        inst_register   => Reg_IR_out,        -- Instruction already in the Instruction Register (IR)
+        CPSR            => CPSRA,             -- Assuming you want to pass the current CPSR value
+        IRQServ         => IRQ_serv,          -- IRQ service output (indicating if interrupt is handled)
+        
+        -- Control Signals for PC and Memory
+        PCSel           => PCSel,             -- Program Counter selection signal
+        PCWrEn          => PCWrEn,            -- Program Counter Write Enable
+        LRWrEn          => LRWrEn,            -- Link Register Write Enable
+        AdrSel          => AdrSel,            -- Address selection signal
+        MemRden         => MemRdEn,           -- Memory Read Enable
+        MemWrEn         => MemWrEn,           -- Memory Write Enable
+        
+        -- Instruction Register and Register File control
+        IRWrEn          => IRWrEn,            -- Instruction Register Write Enable
+        WSel            => WSel,              -- Write selection for registers
+        RegWrEn         => RegWrEn,           -- Register Write Enable
+        
+        -- ALU Operation control
+        ALUSelA         => ALUSelA,           -- ALU Operand A Select
+        ALUSelB         => ALUSelB,           -- ALU Operand B Select
+        ALUOP           => ALUOP,             -- ALU Operation Select
+        
+        -- CPSR and SPSR control
+        CPSRSel         => CPSRSel,           -- CPSR selection signal (to decide if CPSR or SPSR is used)
+        CPSRWrEn        => CPSRWrEn,          -- CPSR Write Enable
+        SPSRWrEn        => SPSRWrEn,          -- SPSR Write Enable
+        
+        -- Result Write Enable
+        ResWrEn         => ResWrEn
+    );
+
 end architecture RTL;
