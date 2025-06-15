@@ -345,7 +345,7 @@ begin
             dout => RegSPSROut
         );
 
-
+    
     CPSRA(31) <= flag_N;
     CPSRA(30) <= flag_Z;
     CPSRA(29 downto 0) <= RegCPSROut(29 downto 0);

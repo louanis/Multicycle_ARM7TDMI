@@ -51,16 +51,16 @@ begin
         wait for 1000 ns;
 
         -- Trigger IRQ0 (increment MEM[0x20] by +1)
-        -- IRQ0 <= '1';
-        -- wait for clk_period;
-        -- IRQ0 <= '0';
+        IRQ0 <= '1';
+        wait for clk_period;
+        IRQ0 <= '0';
 
-        -- wait for 2000 ns;
+        wait for 2000 ns;
 
-        -- -- Trigger IRQ1 (increment MEM[0x20] by +2)
-        -- IRQ1 <= '1';
-        -- wait for clk_period;
-        -- IRQ1 <= '0';
+        -- Trigger IRQ1 (increment MEM[0x20] by +2)
+        IRQ1 <= '1';
+        wait for clk_period;
+        IRQ1 <= '0';
 
         -- Let simulation run to final state
         wait for 8900 ns;

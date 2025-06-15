@@ -1,6 +1,5 @@
 vlib work
 vcom -93 ../../src/ALU.vhd
-vcom -93 ../../src/Memoire_data.vhd
 vcom -93 ../../src/DualPORTRAM.vhd
 vcom -93 ../../src/Mux2v1.vhd
 vcom -93 ../../src/Mux4v1.vhd
@@ -27,20 +26,33 @@ add wave IRQ0
 add wave IRQ1
 
 add wave -divider "CPU Output"
-add wave Affout
+add wave -hex Affout
 
 # Internals (if visible via hierarchy)
 add wave -divider "Internal Signals"
 add wave -hex uut/Chemin_donnee/PCOut
+add wave -hex uut/Chemin_donnee/Mux_addr
 add wave -hex uut/Chemin_donnee/Reg_IR_out
 add wave -hex uut/Machine_AE/curr_state
-add wave -hex uut/Machine_AE/instr_courante
 add wave -hex uut/Chemin_donnee/IRQ
+
+add wave -hex uut/Machine_AE/instr_courante
+
+add wave -divider "MEMOIRE"
+add wave -hex uut/Chemin_donnee/banc_Reg/Banc
 
 add wave -divider "ALUOUT"
 add wave -hex uut/Chemin_donnee/ALU_out
 add wave -hex uut/Machine_AE/inst_register
 add wave -hex uut/Machine_AE/inst_memory
+add wave -hex uut/Machine_AE/regwren
+
+add wave -divider "FLAG"
+add wave -hex uut/Machine_AE/CPSR
+add wave -hex uut/Chemin_donnee/Flag_N
+
+
+
 
 # Run the simulation
 run 5000 ns

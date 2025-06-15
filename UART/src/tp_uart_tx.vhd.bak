@@ -1,0 +1,36 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+USE ieee.numeric_std.all;
+
+Generic ( Fxtal   : integer  := 50e6;  -- in Hertz
+            Parity  : boolean  := false;
+            Even    : boolean  := false
+          );
+entity TP_UART_TX is
+    port (
+        Clk   : in std_logic;
+        Reset : in std_logic;
+        Go    : in std_logic;
+        Baud  : in std_logic; -- Baud Rate Select Baud1 (1) / Baud2 (0) 
+        Data  : in std_logic_vector(7 downto 0);
+        Tx    : out std_logic;
+        Busy  : out std_logic
+    );
+end entity;
+
+
+architecture RTL of TP_UART_TX is
+    signal s_tick       : std_logic;
+    signal s_tick_1     : std_logic;
+    signal s_tick_2     : std_logic;
+    signal nreset       : std_logic;
+    signal ngo          : std_logic;
+
+begin
+    nreset <= not reset;
+    ngo <= not go;
+    inst1: entity work.fdiv(RTL) port map( Baud=>Baud,Clk=>clk, Reset=>nreset, Tick=>s_tick);
+    inst2: entity work.uart_tx port map( Clk=>clk, Reset=>nreset, Go =>ngo, Data =>Data,Tick=>s_tick, Tx=>tx, Busy=>busy);
+
+
+end architecture;

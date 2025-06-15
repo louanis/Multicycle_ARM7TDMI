@@ -1,0 +1,154 @@
+-- tb_data_path.vhd (Updated Testbench for Data_path)
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity tb_data_path is
+end entity;
+
+architecture behavior of tb_data_path is
+
+    -- Component Declaration
+    component Data_path is
+        port(
+            clk      : in std_logic;
+            rst      : in std_logic;
+            Resultat : out std_logic_vector(31 downto 0);
+            IRQ0     : in std_logic;
+            IRQ1     : in std_logic;
+            IRQ      : out std_logic;
+            IRQ_serv : in std_logic;
+            CPSROUT  : out std_logic_vector(31 downto 0);
+            inst_mem : out std_logic_vector(31 downto 0);
+            inst_reg : out std_logic_vector(31 downto 0);
+            PCSel    : in std_logic_vector(1 downto 0);
+            PCWrEn   : in std_logic;
+            LRWrEn   : in std_logic;
+            AdrSel   : in std_logic;
+            MemRdEn  : in std_logic;
+            MemWrEn  : in std_logic;
+            IRWrEn   : in std_logic;
+            RbSel    : in std_logic;
+            WSel     : in std_logic;
+            RegWrEn  : in std_logic;
+            ALUSelA  : in std_logic;
+            ALUSelB  : in std_logic_vector(1 downto 0);
+            ALUOP    : in std_logic_vector(1 downto 0);
+            ResWrEn  : in std_logic;
+            CPSRSel  : in std_logic;
+            CPSRWrEn : in std_logic;
+            SPSRWrEn : in std_logic
+        );
+    end component;
+
+    -- Signals for wiring
+    signal clk      : std_logic := '0';
+    signal rst      : std_logic := '1';
+    signal Resultat : std_logic_vector(31 downto 0);
+    signal IRQ0, IRQ1, IRQ, IRQ_serv : std_logic := '0';
+    signal CPSROUT : std_logic_vector(31 downto 0);
+    signal inst_mem, inst_reg : std_logic_vector(31 downto 0);
+
+    signal PCSel    : std_logic_vector(1 downto 0) := (others => '0');
+    signal PCWrEn, LRWrEn, AdrSel, MemRdEn, MemWrEn, IRWrEn : std_logic := '0';
+    signal RbSel, WSel, RegWrEn, ALUSelA, ResWrEn : std_logic := '0';
+    signal ALUSelB, ALUOP : std_logic_vector(1 downto 0) := (others => '0');
+    signal CPSRSel, CPSRWrEn, SPSRWrEn : std_logic := '0';
+
+    -- Clock Generation
+    constant clk_period : time := 20 ns;
+
+begin
+
+    DUT: Data_path
+        port map (
+            clk => clk,
+            rst => rst,
+            Resultat => Resultat,
+            IRQ0 => IRQ0,
+            IRQ1 => IRQ1,
+            IRQ => IRQ,
+            IRQ_serv => IRQ_serv,
+            CPSROUT => CPSROUT,
+            inst_mem => inst_mem,
+            inst_reg => inst_reg,
+            PCSel => PCSel,
+            PCWrEn => PCWrEn,
+            LRWrEn => LRWrEn,
+            AdrSel => AdrSel,
+            MemRdEn => MemRdEn,
+            MemWrEn => MemWrEn,
+            IRWrEn => IRWrEn,
+            RbSel => RbSel,
+            WSel => WSel,
+            RegWrEn => RegWrEn,
+            ALUSelA => ALUSelA,
+            ALUSelB => ALUSelB,
+            ALUOP => ALUOP,
+            ResWrEn => ResWrEn,
+            CPSRSel => CPSRSel,
+            CPSRWrEn => CPSRWrEn,
+            SPSRWrEn => SPSRWrEn
+        );
+
+    -- Clock process
+    clk_process : process
+    begin
+        while now < 1 us loop
+            clk <= '0';
+            wait for clk_period / 2;
+            clk <= '1';
+            wait for clk_period / 2;
+        end loop;
+        wait;
+    end process;
+
+    -- Stimulus process
+    stim_proc: process
+    begin
+        -- Reset
+        rst <= '1';
+        wait for 40 ns;
+        rst <= '0';
+
+        -- MOV R1, #0x10
+        inst_mem <= x"E3A01010"; -- MOV
+        IRWrEn <= '1'; MemRdEn <= '1'; AdrSel <= '1';
+        wait for clk_period;
+
+        IRWrEn <= '0'; MemRdEn <= '0';
+        ALUSelB <= "01"; ALUOP <= "01"; ResWrEn <= '1';
+        WSel <= '1'; RegWrEn <= '1'; RbSel <= '1';
+        wait for clk_period;
+
+        -- LDR R2, [R1]
+        inst_mem <= x"E5912000"; -- LDR
+        IRWrEn <= '1'; MemRdEn <= '1'; AdrSel <= '1';
+        wait for clk_period;
+
+        IRWrEn <= '0'; MemRdEn <= '0';
+        ALUSelA <= '0'; ALUSelB <= "01"; ALUOP <= "00"; ResWrEn <= '1';
+        wait for clk_period;
+        AdrSel <= '0'; MemRdEn <= '1';
+        wait for clk_period;
+        MemRdEn <= '0'; WSel <= '0'; RegWrEn <= '1'; RbSel <= '1';
+        wait for clk_period;
+
+        -- STR R2, [R1]
+        inst_mem <= x"E5812000"; -- STR
+        IRWrEn <= '1'; MemRdEn <= '1'; AdrSel <= '1';
+        wait for clk_period;
+
+        IRWrEn <= '0'; MemRdEn <= '0';
+        ALUSelA <= '0'; ALUSelB <= "01"; ALUOP <= "00"; ResWrEn <= '1';
+        wait for clk_period;
+        AdrSel <= '0'; MemWrEn <= '1'; RbSel <= '0';
+        wait for clk_period;
+        MemWrEn <= '0';
+
+        -- End simulation
+        wait for 100 ns;
+        assert false report "Simulation finished" severity failure;
+    end process;
+
+end architecture;
