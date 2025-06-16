@@ -1,0 +1,844 @@
+Analysis & Synthesis report for top_level
+Mon Jun 16 18:55:20 2025
+Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. State Machine - |top_level|proco:arm_1|MAE:Machine_AE|curr_state
+  9. Registers Removed During Synthesis
+ 10. General Register Statistics
+ 11. Inverted Register Statistics
+ 12. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 13. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Mux4v1:mux_pc
+ 14. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_pc
+ 15. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_lr
+ 16. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_mem
+ 17. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_ir
+ 18. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_dr
+ 19. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_Reg_rb
+ 20. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_Reg_busw
+ 21. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Extend:ext_8
+ 22. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Extend:ext_24
+ 23. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_alu_a
+ 24. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_A
+ 25. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_B
+ 26. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_aluout
+ 27. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Mux4v1:mux_alu_b
+ 28. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Reg:Result
+ 29. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_cpsr
+ 30. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_cpsr
+ 31. Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_spsr
+ 32. Port Connectivity Checks: "proco:arm_1|MAE:Machine_AE"
+ 33. Port Connectivity Checks: "proco:arm_1|Data_path:Chemin_donnee|Mux4v1:mux_alu_b"
+ 34. Port Connectivity Checks: "proco:arm_1"
+ 35. Post-Synthesis Netlist Statistics for Top Partition
+ 36. Elapsed Time Per Partition
+ 37. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2024  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++-------------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                        ;
++------------------------------------+------------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Mon Jun 16 18:55:20 2025          ;
+; Quartus Prime Version              ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
+; Revision Name                      ; top_level                                      ;
+; Top-level Entity Name              ; top_level                                      ;
+; Family                             ; MAX 10                                         ;
+; Total logic elements               ; 5,166                                          ;
+;     Total combinational functions  ; 2,889                                          ;
+;     Dedicated logic registers      ; 2,870                                          ;
+; Total registers                    ; 2870                                           ;
+; Total pins                         ; 51                                             ;
+; Total virtual pins                 ; 0                                              ;
+; Total memory bits                  ; 0                                              ;
+; Embedded Multiplier 9-bit elements ; 0                                              ;
+; Total PLLs                         ; 0                                              ;
+; UFM blocks                         ; 0                                              ;
+; ADC blocks                         ; 0                                              ;
++------------------------------------+------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                              ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                           ; Setting            ; Default Value      ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                           ; 10M50DAF484C7G     ;                    ;
+; Top-level entity name                                            ; top_level          ; top_level          ;
+; Family name                                                      ; MAX 10             ; Cyclone V          ;
+; Use smart compilation                                            ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                      ; Off                ; Off                ;
+; Restructure Multiplexers                                         ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                              ; Off                ; Off                ;
+; Preserve fewer node names                                        ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                    ; Enable             ; Enable             ;
+; Verilog Version                                                  ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                     ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                         ; Auto               ; Auto               ;
+; Safe State Machine                                               ; Off                ; Off                ;
+; Extract Verilog State Machines                                   ; On                 ; On                 ;
+; Extract VHDL State Machines                                      ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                       ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                   ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                          ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                        ; On                 ; On                 ;
+; Parallel Synthesis                                               ; On                 ; On                 ;
+; DSP Block Balancing                                              ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                               ; On                 ; On                 ;
+; Power-Up Don't Care                                              ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                     ; Off                ; Off                ;
+; Remove Duplicate Registers                                       ; On                 ; On                 ;
+; Ignore CARRY Buffers                                             ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                           ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                            ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                        ; Off                ; Off                ;
+; Ignore LCELL Buffers                                             ; Off                ; Off                ;
+; Ignore SOFT Buffers                                              ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                   ; Off                ; Off                ;
+; Optimization Technique                                           ; Balanced           ; Balanced           ;
+; Carry Chain Length                                               ; 70                 ; 70                 ;
+; Auto Carry Chains                                                ; On                 ; On                 ;
+; Auto Open-Drain Pins                                             ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                            ; Off                ; Off                ;
+; Auto ROM Replacement                                             ; On                 ; On                 ;
+; Auto RAM Replacement                                             ; On                 ; On                 ;
+; Auto DSP Block Replacement                                       ; On                 ; On                 ;
+; Auto Shift Register Replacement                                  ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                  ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                    ; On                 ; On                 ;
+; Strict RAM Replacement                                           ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                           ; Off                ; Off                ;
+; Auto RAM Block Balancing                                         ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                ; Off                ; Off                ;
+; Auto Resource Sharing                                            ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                    ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing              ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                ; Off                ; Off                ;
+; Timing-Driven Synthesis                                          ; On                 ; On                 ;
+; Report Parameter Settings                                        ; On                 ; On                 ;
+; Report Source Assignments                                        ; On                 ; On                 ;
+; Report Connectivity Checks                                       ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                               ; Off                ; Off                ;
+; Synchronization Register Chain Length                            ; 2                  ; 2                  ;
+; Power Optimization During Synthesis                              ; Normal compilation ; Normal compilation ;
+; HDL message level                                                ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                  ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report         ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report               ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report        ; 100                ; 100                ;
+; Clock MUX Protection                                             ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                      ; Off                ; Off                ;
+; Block Design Naming                                              ; Auto               ; Auto               ;
+; SDC constraint protection                                        ; Off                ; Off                ;
+; Synthesis Effort                                                 ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal     ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                             ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                               ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                      ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                           ; On                 ; On                 ;
++------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 16          ;
+; Maximum allowed            ; 16          ;
+;                            ;             ;
+; Average used               ; 1.01        ;
+; Maximum used               ; 16          ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;   0.1%      ;
+;     Processor 3            ;   0.1%      ;
+;     Processor 4            ;   0.1%      ;
+;     Processor 5            ;   0.1%      ;
+;     Processor 6            ;   0.1%      ;
+;     Processor 7            ;   0.1%      ;
+;     Processor 8            ;   0.1%      ;
+;     Processors 9-16        ;   0.1%      ;
++----------------------------+-------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                     ;
++----------------------------------+-----------------+-----------------+---------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type       ; File Name with Absolute Path                                              ; Library ;
++----------------------------------+-----------------+-----------------+---------------------------------------------------------------------------+---------+
+; ../src/VIC.vhd                   ; yes             ; User VHDL File  ; C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/VIC.vhd         ;         ;
+; ../src/top_level.vhd             ; yes             ; User VHDL File  ; C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/top_level.vhd   ;         ;
+; ../src/RegisterARM.vhd           ; yes             ; User VHDL File  ; C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/RegisterARM.vhd ;         ;
+; ../src/Regclk.vhd                ; yes             ; User VHDL File  ; C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Regclk.vhd      ;         ;
+; ../src/Reg.vhd                   ; yes             ; User VHDL File  ; C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Reg.vhd         ;         ;
+; ../src/proco.vhd                 ; yes             ; User VHDL File  ; C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/proco.vhd       ;         ;
+; ../src/Mux4v1.vhd                ; yes             ; User VHDL File  ; C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Mux4v1.vhd      ;         ;
+; ../src/Mux2v1.vhd                ; yes             ; User VHDL File  ; C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Mux2v1.vhd      ;         ;
+; ../src/MAE.vhd                   ; yes             ; User VHDL File  ; C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/MAE.vhd         ;         ;
+; ../src/Extend.vhd                ; yes             ; User VHDL File  ; C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Extend.vhd      ;         ;
+; ../src/DualPortRAM.vhd           ; yes             ; User VHDL File  ; C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd ;         ;
+; ../src/Data_path.vhd             ; yes             ; User VHDL File  ; C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd   ;         ;
+; ../src/ALU.vhd                   ; yes             ; User VHDL File  ; C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/ALU.vhd         ;         ;
++----------------------------------+-----------------+-----------------+---------------------------------------------------------------------------+---------+
+
+
++--------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                  ;
++---------------------------------------------+----------------+
+; Resource                                    ; Usage          ;
++---------------------------------------------+----------------+
+; Estimated Total logic elements              ; 5,166          ;
+;                                             ;                ;
+; Total combinational functions               ; 2889           ;
+; Logic element usage by number of LUT inputs ;                ;
+;     -- 4 input functions                    ; 2249           ;
+;     -- 3 input functions                    ; 207            ;
+;     -- <=2 input functions                  ; 433            ;
+;                                             ;                ;
+; Logic elements by mode                      ;                ;
+;     -- normal mode                          ; 2857           ;
+;     -- arithmetic mode                      ; 32             ;
+;                                             ;                ;
+; Total registers                             ; 2870           ;
+;     -- Dedicated logic registers            ; 2870           ;
+;     -- I/O registers                        ; 0              ;
+;                                             ;                ;
+; I/O pins                                    ; 51             ;
+;                                             ;                ;
+; Embedded Multiplier 9-bit elements          ; 0              ;
+;                                             ;                ;
+; Maximum fan-out node                        ; CLOCK_50~input ;
+; Maximum fan-out                             ; 2870           ;
+; Total fan-out                               ; 21569          ;
+; Average fan-out                             ; 3.68           ;
++---------------------------------------------+----------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                     ;
++---------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------------------------------------------------------+-------------+--------------+
+; Compilation Hierarchy Node      ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; UFM Blocks ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; ADC blocks ; Full Hierarchy Name                                                 ; Entity Name ; Library Name ;
++---------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------------------------------------------------------+-------------+--------------+
+; |top_level                      ; 2889 (56)           ; 2870 (0)                  ; 0           ; 0          ; 0            ; 0       ; 0         ; 51   ; 0            ; 0          ; |top_level                                                          ; top_level   ; work         ;
+;    |proco:arm_1|                ; 2833 (0)            ; 2870 (0)                  ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1                                              ; proco       ; work         ;
+;       |Data_path:Chemin_donnee| ; 2760 (0)            ; 2836 (0)                  ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee                      ; Data_path   ; work         ;
+;          |ALU:ALU_ab|           ; 129 (129)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|ALU:ALU_ab           ; ALU         ; work         ;
+;          |DualPortRAM:mem_dat|  ; 1783 (1783)         ; 2080 (2080)               ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat  ; DualPortRAM ; work         ;
+;          |Mux2v1:mux_Reg_busw|  ; 50 (50)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_Reg_busw  ; Mux2v1      ; work         ;
+;          |Mux2v1:mux_alu_a|     ; 32 (32)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_alu_a     ; Mux2v1      ; work         ;
+;          |Mux2v1:mux_mem|       ; 7 (7)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_mem       ; Mux2v1      ; work         ;
+;          |Mux4v1:mux_alu_b|     ; 33 (33)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Mux4v1:mux_alu_b     ; Mux4v1      ; work         ;
+;          |Mux4v1:mux_pc|        ; 8 (8)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Mux4v1:mux_pc        ; Mux4v1      ; work         ;
+;          |Reg:Reg_ir|           ; 0 (0)               ; 32 (32)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_ir           ; Reg         ; work         ;
+;          |Reg:Reg_lr|           ; 0 (0)               ; 32 (32)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_lr           ; Reg         ; work         ;
+;          |Reg:Reg_pc|           ; 48 (48)             ; 32 (32)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_pc           ; Reg         ; work         ;
+;          |Reg:Result|           ; 0 (0)               ; 16 (16)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Reg:Result           ; Reg         ; work         ;
+;          |Regclk:Reg_A|         ; 0 (0)               ; 32 (32)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_A         ; Regclk      ; work         ;
+;          |Regclk:Reg_B|         ; 0 (0)               ; 32 (32)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_B         ; Regclk      ; work         ;
+;          |Regclk:Reg_aluout|    ; 0 (0)               ; 32 (32)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_aluout    ; Regclk      ; work         ;
+;          |Regclk:Reg_dr|        ; 0 (0)               ; 32 (32)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_dr        ; Regclk      ; work         ;
+;          |RegisterARM:banc_Reg| ; 664 (664)           ; 512 (512)                 ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|RegisterARM:banc_Reg ; RegisterARM ; work         ;
+;          |VIC:VIC_comp|         ; 6 (6)               ; 4 (4)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|Data_path:Chemin_donnee|VIC:VIC_comp         ; VIC         ; work         ;
+;       |MAE:Machine_AE|          ; 73 (73)             ; 34 (34)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |top_level|proco:arm_1|MAE:Machine_AE                               ; MAE         ; work         ;
++---------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------------------------------------------------------+-------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
+Encoding Type:  One-Hot
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |top_level|proco:arm_1|MAE:Machine_AE|curr_state                                                                                                                                                                                                                                       ;
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+----------------+----------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+
+; Name           ; curr_state.E18 ; curr_state.E17 ; curr_state.E16 ; curr_state.E15 ; curr_state.E13 ; curr_state.E12 ; curr_state.E11 ; curr_state.E10 ; curr_state.E9 ; curr_state.E8 ; curr_state.E7 ; curr_state.E6 ; curr_state.E5 ; curr_state.E4 ; curr_state.E3 ; curr_state.E2 ; curr_state.E1 ;
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+----------------+----------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+
+; curr_state.E1  ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ;
+; curr_state.E2  ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ; 1             ;
+; curr_state.E3  ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ; 0             ; 1             ;
+; curr_state.E4  ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ; 0             ; 0             ; 1             ;
+; curr_state.E5  ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0             ; 0             ; 0             ; 1             ; 0             ; 0             ; 0             ; 1             ;
+; curr_state.E6  ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0             ; 0             ; 1             ; 0             ; 0             ; 0             ; 0             ; 1             ;
+; curr_state.E7  ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0             ; 1             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ;
+; curr_state.E8  ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 1             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ;
+; curr_state.E9  ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 1             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ;
+; curr_state.E10 ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 1              ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ;
+; curr_state.E11 ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 1              ; 0              ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ;
+; curr_state.E12 ; 0              ; 0              ; 0              ; 0              ; 0              ; 1              ; 0              ; 0              ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ;
+; curr_state.E13 ; 0              ; 0              ; 0              ; 0              ; 1              ; 0              ; 0              ; 0              ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ;
+; curr_state.E15 ; 0              ; 0              ; 0              ; 1              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ;
+; curr_state.E16 ; 0              ; 0              ; 1              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ;
+; curr_state.E17 ; 0              ; 1              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ;
+; curr_state.E18 ; 1              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ;
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+----------------+----------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+
+
+
++----------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                     ;
++---------------------------------------+------------------------------------------------+
+; Register name                         ; Reason for Removal                             ;
++---------------------------------------+------------------------------------------------+
+; proco:arm_1|MAE:Machine_AE|ResWrEn    ; Merged with proco:arm_1|MAE:Machine_AE|MemWrEn ;
+; Total Number of Removed Registers = 1 ;                                                ;
++---------------------------------------+------------------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 2870  ;
+; Number of registers using Synchronous Clear  ; 28    ;
+; Number of registers using Synchronous Load   ; 28    ;
+; Number of registers using Asynchronous Clear ; 2838  ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 2704  ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++-------------------------------------------------------------------------------------+
+; Inverted Register Statistics                                                        ;
++---------------------------------------------------------------------------+---------+
+; Inverted Register                                                         ; Fan out ;
++---------------------------------------------------------------------------+---------+
+; proco:arm_1|MAE:Machine_AE|IRWrEn                                         ; 33      ;
+; proco:arm_1|MAE:Machine_AE|AdrSel                                         ; 8       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[29][13] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[10][13] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[12][13] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[8][13]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[11][13] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[17][13] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[1][13]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[6][13]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[22][13] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[16][13] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[7][13]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[3][13]  ; 1       ;
+; proco:arm_1|MAE:Machine_AE|MemRden                                        ; 2       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[24][12] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[22][12] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[23][12] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[18][12] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[17][12] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[16][12] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[29][12] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[28][12] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[9][12]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[11][12] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[12][12] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[6][12]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[4][12]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[14][12] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[8][12]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[0][12]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[10][12] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[13][12] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[15][12] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[29][15] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[17][15] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[22][15] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[10][15] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[6][15]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[8][15]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[21][14] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[17][14] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[22][14] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[23][14] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[10][14] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[8][14]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[6][14]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[30][14] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[28][14] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[27][14] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[25][14] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[26][14] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[24][14] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[29][14] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[17][0]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[22][0]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[10][0]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[40][0]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[14][0]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[36][0]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[4][0]   ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[38][0]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[32][0]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[34][0]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[29][0]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[18][20] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[16][20] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[13][20] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[8][20]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[6][20]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[2][20]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[5][20]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[30][20] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[28][20] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[25][20] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[28][26] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[30][26] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[11][26] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[27][26] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[9][26]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[25][26] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[18][26] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[2][26]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[16][26] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[15][26] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[7][26]  ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[21][26] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[13][26] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[23][26] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[26][31] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[19][31] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[18][31] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[27][31] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[28][31] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[21][31] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[29][31] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[24][31] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[17][31] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[16][31] ; 1       ;
+; proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[25][31] ; 1       ;
+; Total number of inverted registers = 369*                                 ;         ;
++---------------------------------------------------------------------------+---------+
+* Table truncated at 100 items. To change the number of inverted registers reported, set the "Number of Inverted Registers Reported" option under Assignments->Settings->Analysis and Synthesis Settings->More Settings
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                         ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                               ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------------------------+
+; 4:1                ; 28 bits   ; 56 LEs        ; 56 LEs               ; 0 LEs                  ; Yes        ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_pc|Dout[24]       ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_pc|Dout[3]        ;
+; 16:1               ; 32 bits   ; 320 LEs       ; 320 LEs              ; 0 LEs                  ; Yes        ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_A|Dout[24]     ;
+; 16:1               ; 32 bits   ; 320 LEs       ; 320 LEs              ; 0 LEs                  ; Yes        ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_B|Dout[25]     ;
+; 64:1               ; 32 bits   ; 1344 LEs      ; 1344 LEs             ; 0 LEs                  ; Yes        ; |top_level|proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|q[12] ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; No         ; |top_level|proco:arm_1|Data_path:Chemin_donnee|ALU:ALU_ab|Mux15          ;
+; 3:1                ; 24 bits   ; 48 LEs        ; 48 LEs               ; 0 LEs                  ; No         ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Mux4v1:mux_alu_b|S[12]    ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |top_level|proco:arm_1|Data_path:Chemin_donnee|Mux4v1:mux_alu_b|S[6]     ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 2 LEs                ; 4 LEs                  ; No         ; |top_level|proco:arm_1|MAE:Machine_AE|curr_state                         ;
+; 258:1              ; 3 bits    ; 516 LEs       ; 3 LEs                ; 513 LEs                ; No         ; |top_level|proco:arm_1|MAE:Machine_AE|curr_state                         ;
+; 6:1                ; 2 bits    ; 8 LEs         ; 2 LEs                ; 6 LEs                  ; No         ; |top_level|proco:arm_1|MAE:Machine_AE|instr_courante.LDR                 ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Mux4v1:mux_pc ;
++----------------+-------+-----------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                  ;
++----------------+-------+-----------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                        ;
++----------------+-------+-----------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_pc ;
++----------------+-------+--------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                               ;
++----------------+-------+--------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                     ;
++----------------+-------+--------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_lr ;
++----------------+-------+--------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                               ;
++----------------+-------+--------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                     ;
++----------------+-------+--------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_mem ;
++----------------+-------+------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                   ;
++----------------+-------+------------------------------------------------------------------------+
+; n              ; 6     ; Signed Integer                                                         ;
++----------------+-------+------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_ir ;
++----------------+-------+--------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                               ;
++----------------+-------+--------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                     ;
++----------------+-------+--------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_dr ;
++----------------+-------+-----------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                  ;
++----------------+-------+-----------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                        ;
++----------------+-------+-----------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_Reg_rb ;
++----------------+-------+---------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                      ;
++----------------+-------+---------------------------------------------------------------------------+
+; n              ; 4     ; Signed Integer                                                            ;
++----------------+-------+---------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_Reg_busw ;
++----------------+-------+-----------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                        ;
++----------------+-------+-----------------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                              ;
++----------------+-------+-----------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Extend:ext_8 ;
++----------------+-------+----------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                 ;
++----------------+-------+----------------------------------------------------------------------+
+; n              ; 8     ; Signed Integer                                                       ;
++----------------+-------+----------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Extend:ext_24 ;
++----------------+-------+-----------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                  ;
++----------------+-------+-----------------------------------------------------------------------+
+; n              ; 24    ; Signed Integer                                                        ;
++----------------+-------+-----------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_alu_a ;
++----------------+-------+--------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                     ;
++----------------+-------+--------------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                           ;
++----------------+-------+--------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_A ;
++----------------+-------+----------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                 ;
++----------------+-------+----------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                       ;
++----------------+-------+----------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_B ;
++----------------+-------+----------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                 ;
++----------------+-------+----------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                       ;
++----------------+-------+----------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_aluout ;
++----------------+-------+---------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                      ;
++----------------+-------+---------------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                            ;
++----------------+-------+---------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Mux4v1:mux_alu_b ;
++----------------+-------+--------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                     ;
++----------------+-------+--------------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                           ;
++----------------+-------+--------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Reg:Result ;
++----------------+-------+--------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                               ;
++----------------+-------+--------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                     ;
++----------------+-------+--------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_cpsr ;
++----------------+-------+-------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                    ;
++----------------+-------+-------------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                          ;
++----------------+-------+-------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_cpsr ;
++----------------+-------+----------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                 ;
++----------------+-------+----------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                       ;
++----------------+-------+----------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_spsr ;
++----------------+-------+----------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                 ;
++----------------+-------+----------------------------------------------------------------------+
+; n              ; 32    ; Signed Integer                                                       ;
++----------------+-------+----------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "proco:arm_1|MAE:Machine_AE"                                                          ;
++-------+--------+----------+-------------------------------------------------------------------------------------+
+; Port  ; Type   ; Severity ; Details                                                                             ;
++-------+--------+----------+-------------------------------------------------------------------------------------+
+; rbsel ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++-------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------+
+; Port Connectivity Checks: "proco:arm_1|Data_path:Chemin_donnee|Mux4v1:mux_alu_b" ;
++----------+-------+----------+----------------------------------------------------+
+; Port     ; Type  ; Severity ; Details                                            ;
++----------+-------+----------+----------------------------------------------------+
+; d[31..1] ; Input ; Info     ; Stuck at GND                                       ;
+; d[0]     ; Input ; Info     ; Stuck at VCC                                       ;
++----------+-------+----------+----------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "proco:arm_1"                                                                                  ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port           ; Type   ; Severity ; Details                                                                             ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+; affout[31..16] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 51                          ;
+; cycloneiii_ff         ; 2870                        ;
+;     CLR               ; 166                         ;
+;     ENA               ; 32                          ;
+;     ENA CLR           ; 2644                        ;
+;     ENA CLR SCLR SLD  ; 28                          ;
+; cycloneiii_lcell_comb ; 2895                        ;
+;     arith             ; 32                          ;
+;         2 data inputs ; 1                           ;
+;         3 data inputs ; 31                          ;
+;     normal            ; 2863                        ;
+;         1 data inputs ; 375                         ;
+;         2 data inputs ; 63                          ;
+;         3 data inputs ; 176                         ;
+;         4 data inputs ; 2249                        ;
+;                       ;                             ;
+; Max LUT depth         ; 11.40                       ;
+; Average LUT depth     ; 5.47                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:02     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+    Info: Processing started: Mon Jun 16 18:55:13 2025
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off top_level -c top_level
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 16 of the 16 processors detected
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/uart/src/validation_uart.vhd
+    Info (12022): Found design unit 1: VALIDATION_UART-RTL File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/UART/src/VALIDATION_UART.vhd Line: 35
+    Info (12023): Found entity 1: VALIDATION_UART File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/UART/src/VALIDATION_UART.vhd Line: 9
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/uart/src/uarts.vhd
+    Info (12022): Found design unit 1: UARTS-RTL File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/UART/src/Uarts.vhd Line: 36
+    Info (12023): Found entity 1: UARTS File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/UART/src/Uarts.vhd Line: 9
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/uart/src/uart_tx.vhd
+    Info (12022): Found design unit 1: UART_TX-RTL File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/UART/src/uart_tx.vhd Line: 22
+    Info (12023): Found entity 1: UART_TX File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/UART/src/uart_tx.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/uart/src/uart_rx.vhd
+    Info (12022): Found design unit 1: UART_RX-RTL File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/UART/src/uart_rx.vhd Line: 23
+    Info (12023): Found entity 1: UART_RX File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/UART/src/uart_rx.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/uart/src/tp_uart_tx.vhd
+    Info (12022): Found design unit 1: TP_UART_TX-RTL File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/UART/src/tp_uart_tx.vhd Line: 23
+    Info (12023): Found entity 1: TP_UART_TX File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/UART/src/tp_uart_tx.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/uart/src/tp_uart_rx.vhd
+    Info (12022): Found design unit 1: TP_UART_RX-RTL File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/UART/src/tp_uart_rx.vhd Line: 23
+    Info (12023): Found entity 1: TP_UART_RX File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/UART/src/tp_uart_rx.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/uart/src/fdiv.vhd
+    Info (12022): Found design unit 1: FDIV-RTL File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/UART/src/fdiv.vhd Line: 19
+    Info (12023): Found entity 1: FDIV File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/UART/src/fdiv.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/vic.vhd
+    Info (12022): Found design unit 1: VIC-Behavioral File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/VIC.vhd Line: 17
+    Info (12023): Found entity 1: VIC File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/VIC.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/top_level.vhd
+    Info (12022): Found design unit 1: top_level-ARCHI File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/top_level.vhd Line: 19
+    Info (12023): Found entity 1: top_level File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/top_level.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/registerarm.vhd
+    Info (12022): Found design unit 1: RegisterARM-rtl File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/RegisterARM.vhd Line: 20
+    Info (12023): Found entity 1: RegisterARM File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/RegisterARM.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/regclk.vhd
+    Info (12022): Found design unit 1: Regclk-Behavioral File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Regclk.vhd Line: 17
+    Info (12023): Found entity 1: Regclk File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Regclk.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/reg.vhd
+    Info (12022): Found design unit 1: Reg-Behavioral File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Reg.vhd Line: 18
+    Info (12023): Found entity 1: Reg File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Reg.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/proco.vhd
+    Info (12022): Found design unit 1: proco-Behavioral File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/proco.vhd Line: 16
+    Info (12023): Found entity 1: proco File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/proco.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/mux4v1.vhd
+    Info (12022): Found design unit 1: Mux4v1-Behavioral File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Mux4v1.vhd Line: 19
+    Info (12023): Found entity 1: Mux4v1 File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Mux4v1.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/mux2v1.vhd
+    Info (12022): Found design unit 1: Mux2v1-Behavioral File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Mux2v1.vhd Line: 17
+    Info (12023): Found entity 1: Mux2v1 File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Mux2v1.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/mae.vhd
+    Info (12022): Found design unit 1: MAE-Behavioral File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/MAE.vhd Line: 25
+    Info (12023): Found entity 1: MAE File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/MAE.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/extend.vhd
+    Info (12022): Found design unit 1: Extend-Behavioral File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Extend.vhd Line: 16
+    Info (12023): Found entity 1: Extend File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Extend.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/dualportram.vhd
+    Info (12022): Found design unit 1: DualPortRAM-rtl File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 15
+    Info (12023): Found entity 1: DualPortRAM File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/data_path.vhd
+    Info (12022): Found design unit 1: Data_path-RTL File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd Line: 42
+    Info (12023): Found entity 1: Data_path File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file /users/yanis/vhdl/projet/projet/multicycle_arm7tdmi/src/alu.vhd
+    Info (12022): Found design unit 1: ALU-rtl File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/ALU.vhd Line: 17
+    Info (12023): Found entity 1: ALU File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/ALU.vhd Line: 6
+Info (12127): Elaborating entity "top_level" for the top level hierarchy
+Info (12128): Elaborating entity "proco" for hierarchy "proco:arm_1" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/top_level.vhd Line: 44
+Warning (10541): VHDL Signal Declaration warning at proco.vhd(29): used implicit default value for signal "RbSel" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/proco.vhd Line: 29
+Info (12128): Elaborating entity "Data_path" for hierarchy "proco:arm_1|Data_path:Chemin_donnee" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/proco.vhd Line: 41
+Info (12128): Elaborating entity "VIC" for hierarchy "proco:arm_1|Data_path:Chemin_donnee|VIC:VIC_comp" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd Line: 85
+Info (12128): Elaborating entity "Mux4v1" for hierarchy "proco:arm_1|Data_path:Chemin_donnee|Mux4v1:mux_pc" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd Line: 96
+Warning (10492): VHDL Process Statement warning at Mux4v1.vhd(28): signal "C" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Mux4v1.vhd Line: 28
+Warning (10492): VHDL Process Statement warning at Mux4v1.vhd(30): signal "D" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Mux4v1.vhd Line: 30
+Info (12128): Elaborating entity "Reg" for hierarchy "proco:arm_1|Data_path:Chemin_donnee|Reg:Reg_pc" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd Line: 109
+Info (12128): Elaborating entity "Mux2v1" for hierarchy "proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_mem" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd Line: 134
+Info (12129): Elaborating entity "DualPortRAM" using architecture "A:rtl" for hierarchy "proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd Line: 145
+Info (12128): Elaborating entity "Regclk" for hierarchy "proco:arm_1|Data_path:Chemin_donnee|Regclk:Reg_dr" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd Line: 169
+Info (12128): Elaborating entity "Mux2v1" for hierarchy "proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_Reg_rb" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd Line: 180
+Info (12128): Elaborating entity "Mux2v1" for hierarchy "proco:arm_1|Data_path:Chemin_donnee|Mux2v1:mux_Reg_busw" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd Line: 191
+Info (12129): Elaborating entity "RegisterARM" using architecture "A:rtl" for hierarchy "proco:arm_1|Data_path:Chemin_donnee|RegisterARM:banc_Reg" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd Line: 203
+Info (12128): Elaborating entity "Extend" for hierarchy "proco:arm_1|Data_path:Chemin_donnee|Extend:ext_8" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd Line: 216
+Info (12128): Elaborating entity "Extend" for hierarchy "proco:arm_1|Data_path:Chemin_donnee|Extend:ext_24" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd Line: 225
+Info (12128): Elaborating entity "ALU" for hierarchy "proco:arm_1|Data_path:Chemin_donnee|ALU:ALU_ab" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/Data_path.vhd Line: 291
+Info (12128): Elaborating entity "MAE" for hierarchy "proco:arm_1|MAE:Machine_AE" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/proco.vhd Line: 72
+Info (13000): Registers with preset signals will power-up high File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/MAE.vhd Line: 16
+Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
+Info (286030): Timing-Driven Synthesis is running
+Critical Warning (18061): Ignored Power-Up Level option on the following registers
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[5][12] will power up to Low File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[4][0] will power up to High File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[2][25] will power up to High File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[7][25] will power up to High File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[2][24] will power up to Low File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[7][24] will power up to Low File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[2][23] will power up to Low File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[7][23] will power up to Low File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[3][17] will power up to High File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[7][17] will power up to Low File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[5][17] will power up to Low File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[5][16] will power up to High File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[7][16] will power up to High File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[5][4] will power up to Low File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[5][2] will power up to Low File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[4][2] will power up to Low File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[6][2] will power up to High File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[5][1] will power up to High File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[6][1] will power up to Low File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+    Critical Warning (18010): Register proco:arm_1|Data_path:Chemin_donnee|DualPortRAM:mem_dat|ram_block[3][1] will power up to Low File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/DualPortRAM.vhd Line: 71
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 1 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "SW[0]" File: C:/Users/Yanis/VHDL/Projet/Projet/Multicycle_ARM7TDMI/src/top_level.vhd Line: 9
+Info (21057): Implemented 5263 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 13 input pins
+    Info (21059): Implemented 38 output pins
+    Info (21061): Implemented 5212 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 27 warnings
+    Info: Peak virtual memory: 4945 megabytes
+    Info: Processing ended: Mon Jun 16 18:55:20 2025
+    Info: Elapsed time: 00:00:07
+    Info: Total CPU time (on all processors): 00:00:12
+
+

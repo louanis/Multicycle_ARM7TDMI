@@ -41,6 +41,24 @@ add wave -hex uut/Machine_AE/instr_courante
 add wave -divider "MEMOIRE"
 add wave -hex uut/Chemin_donnee/banc_Reg/Banc
 
+add wave -divider "SIGNAUX INTERNE"
+add wave -hex uut/Chemin_donnee/PCWrEn
+add wave -hex uut/Chemin_donnee/LRWrEn
+add wave -hex uut/Chemin_donnee/AdrSel
+add wave -hex uut/Chemin_donnee/MemRden
+add wave -hex uut/Chemin_donnee/MemWrEn
+add wave -hex uut/Chemin_donnee/IRWrEn
+add wave -hex uut/Chemin_donnee/WSel
+add wave -hex uut/Chemin_donnee/RegWrEn
+add wave -hex uut/Chemin_donnee/ALUSelA
+add wave -hex uut/Chemin_donnee/ALUSelB
+add wave -hex uut/Chemin_donnee/ALUOP
+add wave -hex uut/Chemin_donnee/CPSRSel
+add wave -hex uut/Chemin_donnee/CPSRWrEn
+add wave -hex uut/Chemin_donnee/SPSRWrEn
+add wave -hex uut/Chemin_donnee/ResWrEn
+add wave -hex uut/Chemin_donnee/RbSel
+
 add wave -divider "ALUOUT"
 add wave -hex uut/Chemin_donnee/ALU_out
 add wave -hex uut/Machine_AE/inst_register
@@ -50,7 +68,6 @@ add wave -hex uut/Machine_AE/regwren
 add wave -divider "FLAG"
 add wave -hex uut/Machine_AE/CPSR
 add wave -hex uut/Chemin_donnee/Flag_N
-
 
 
 

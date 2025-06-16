@@ -1,0 +1,20 @@
+
+State Machine - |top_level|proco:arm_1|MAE:Machine_AE|curr_state
+Name curr_state.E18 curr_state.E17 curr_state.E16 curr_state.E15 curr_state.E13 curr_state.E12 curr_state.E11 curr_state.E10 curr_state.E9 curr_state.E8 curr_state.E7 curr_state.E6 curr_state.E5 curr_state.E4 curr_state.E3 curr_state.E2 curr_state.E1 
+curr_state.E1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+curr_state.E2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+curr_state.E3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+curr_state.E4 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+curr_state.E5 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+curr_state.E6 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+curr_state.E7 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+curr_state.E8 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+curr_state.E9 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+curr_state.E10 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+curr_state.E11 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+curr_state.E12 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+curr_state.E13 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+curr_state.E15 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+curr_state.E16 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+curr_state.E17 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+curr_state.E18 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
