@@ -80,6 +80,9 @@ architecture RTL of Data_path is
     signal RegSPSROut                                             : std_logic_vector(31 downto 0);
 
 
+    signal Reg_IR_outdownto                                       : std_logic_vector(3 downto 0);
+
+
 begin
 
     VIC_comp : entity work.VIC
@@ -355,5 +358,6 @@ begin
     inst_reg <= Reg_IR_out;
     inst_mem <= RdData;
 
+    Reg_IR_outdownto <= Reg_IR_out(19 downto 16);
 
 end architecture RTL;
